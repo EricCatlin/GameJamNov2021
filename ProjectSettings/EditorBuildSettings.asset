@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ComplexScene.unity
     guid: e046d6866d6fce646a3ab86061b4d452
+  - enabled: 1
+    path: Assets/Scenes/TankGame.unity
+    guid: f8f31dfed69f4d7498cbca8b25d44963
   m_configObjects: {}
