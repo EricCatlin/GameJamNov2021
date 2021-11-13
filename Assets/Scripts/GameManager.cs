@@ -86,6 +86,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Loading Complete");
 
+            // Add completed levels to the list of levels to be loaded.
+            levels.AddRange (completedLevels); //TODO remove this
             LoadScene (CompleteScene);
         }
     }
@@ -103,9 +105,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loading level: " + scene.SceneName);
 
         // Load the selected scene, by scene name.
-        currentScene = scene;
         levels.Remove (scene);
-        SceneManager.LoadScene(currentScene.SceneName);
+        SceneManager.LoadScene(scene.SceneName);
+        currentScene = scene;
     }
 
     public void SetLevelFromScene(LevelManager level)
