@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public List<SceneField> completedLevels;
 
-    public SceneField currentScene;
+    public SceneField CurrentScene;
 
     public int score = 0;
 
@@ -41,40 +41,26 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad (gameObject);
 
         // Get a component reference to the attached BoardManager script
-        if (currentScene == null)
+        if (CurrentScene == null)
         {
             LoadScene (MenuScene);
         }
     }
 
-    public static GameManager GetInstance()
-    {
-        return instance;
-    }
-
-    // Initializes the game for each level.
-    void InitGame()
-    {
-        // Call the SetupScene function of the levelScript script, pass it current level number.
-        CurrentLevel.Begin();
-    }
-
-    public void Complete(int score = 1)
+    public void LevelFinished(int score = 1)
     {
         Debug.Log("Complete");
         if (CurrentLevel != null)
         {
             Debug.Log("Current");
             this.score += score;
-            completedLevels.Add (currentScene);
-            LoadRandomLevel();
+            completedLevels.Add (CurrentScene);
         }
+        LoadRandomLevel();
     }
 
     public void LoadRandomLevel()
     {
-        Debug.Log("LoadRandomLevel");
-        Debug.Log(levels.Count);
         if (levels.Count > 0)
         {
             Debug.Log("Loading random level");
@@ -88,6 +74,7 @@ public class GameManager : MonoBehaviour
 
             // Add completed levels to the list of levels to be loaded.
             levels.AddRange (completedLevels); //TODO remove this
+            completedLevels.Clear();
             LoadScene (CompleteScene);
         }
     }
@@ -95,24 +82,26 @@ public class GameManager : MonoBehaviour
     void LoadScene(SceneField scene)
     {
         Debug.Log("Loading Scene: " + scene.SceneName);
-
-        // Load the selected scene, by scene name.
         SceneManager.LoadScene(scene.SceneName);
     }
 
     void LoadLevel(SceneField scene)
     {
         Debug.Log("Loading level: " + scene.SceneName);
-
-        // Load the selected scene, by scene name.
         levels.Remove (scene);
         SceneManager.LoadScene(scene.SceneName);
-        currentScene = scene;
+        CurrentScene = scene;
     }
 
-    public void SetLevelFromScene(LevelManager level)
+    public void StartGame()
+    {
+        LoadRandomLevel();
+    }
+
+    public void LevelLoaded(LevelManager level)
     {
         CurrentLevel = level;
+        level.Begin();
     }
 
     // Update is called every frame.
