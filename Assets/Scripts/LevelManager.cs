@@ -8,7 +8,11 @@ public class LevelManager : MonoBehaviour
 
     public GameManager gameManager;
 
+    public GameObject FailureUI;
+
     public int timeout = 10;
+
+    public bool Won;
 
     // Start is called before the first frame update
     void Start()
@@ -30,18 +34,32 @@ public class LevelManager : MonoBehaviour
     public void Complete()
     {
         Debug.Log("Level Completed");
-        if (gameManager != null)
-        {
-            gameManager.LevelFinished(1);
-        }
+        Won = true;
     }
 
     public void Failed()
     {
+        Won = false;
         Debug.Log("Level Failed");
-        if (gameManager != null)
+        FailureUI.SetActive(true);
+    }
+
+    IEnumerator EndLevel()
+    {
+        yield return new WaitForSeconds(2.5f);
+        if (Won)
         {
-            gameManager.LevelFinished(0);
+            if (gameManager != null)
+            {
+                gameManager.LevelFinished(1);
+            }
+        }
+        else
+        {
+            if (gameManager != null)
+            {
+                gameManager.LevelFinished(0);
+            }
         }
     }
 

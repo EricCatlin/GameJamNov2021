@@ -1,25 +1,19 @@
 fileFormatVersion: 2
-guid: e9e8dcbcc4ab180439665d373b53a764
+guid: 16d724022dc299646b32e2a7f535d55f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5986030973748356752
-    second: Explosion_0
+      213: -6405752098009995145
+    second: Failed_0
   - first:
-      213: -5600206312213581617
-    second: Explosion_1
+      213: 7169556102744558946
+    second: Failed_1
   - first:
-      213: 3815954189206336483
-    second: Explosion_2
+      213: -1735701646927129471
+    second: Failed_2
   - first:
-      213: -3690502768834906923
-    second: Explosion_3
-  - first:
-      213: -49130668184793455
-    second: Explosion_4
-  - first:
-      213: -2330519403281856691
-    second: Explosion_5
+      213: -5983638991010410741
+    second: Failed_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -121,7 +115,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Explosion_0
+      name: Failed_0
       rect:
         serializedVersion: 2
         x: 0
@@ -135,14 +129,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 096a1cc8477a21350800000000000000
-      internalID: 5986030973748356752
+      spriteID: 778a6eee7623a17a0800000000000000
+      internalID: -6405752098009995145
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion_1
+      name: Failed_1
       rect:
         serializedVersion: 2
         x: 32
@@ -156,14 +150,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc0fb9bb7021842b0800000000000000
-      internalID: -5600206312213581617
+      spriteID: 26dc25d1a416f7360800000000000000
+      internalID: 7169556102744558946
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion_2
+      name: Failed_2
       rect:
         serializedVersion: 2
         x: 64
@@ -177,14 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3e3bec60e1ef4f430800000000000000
-      internalID: 3815954189206336483
+      spriteID: 18419da5c8c89e7e0800000000000000
+      internalID: -1735701646927129471
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explosion_3
+      name: Failed_3
       rect:
         serializedVersion: 2
         x: 96
@@ -198,50 +192,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d4fffce843b8ccc0800000000000000
-      internalID: -3690502768834906923
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion_4
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 19e8447eae3715ff0800000000000000
-      internalID: -49130668184793455
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explosion_5
-      rect:
-        serializedVersion: 2
-        x: 160
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d47ca3943f458afd0800000000000000
-      internalID: -2330519403281856691
+      spriteID: b0fc5a45a08d5fca0800000000000000
+      internalID: -5983638991010410741
       vertices: []
       indices: 
       edges: []
