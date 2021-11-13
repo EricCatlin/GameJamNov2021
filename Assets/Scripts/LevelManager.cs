@@ -1,14 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
     public GameObject GameManagerObject;
 
+    public GameObject CountDownUI;
+
     public GameManager gameManager;
 
+    public GameObject FailureUI;
+
+    public UnityEvent OnBegin;
+
+    public UnityEvent OnLevelComplete;
+
+    public UnityEvent OnLevelFailed;
+
     public int timeout = 10;
+
+    public Coroutine timeoutCoroutine;
+
+    public bool Won;
 
     // Start is called before the first frame update
     void Start()
@@ -24,37 +39,85 @@ public class LevelManager : MonoBehaviour
     public void Begin()
     {
         Debug.Log("Level Started");
-        StartCoroutine(Timeout());
+        timeoutCoroutine = StartCoroutine(Timeout());
+    }
+
+    public void End()
+    {
+        Debug.Log("Level Ended");
+        StopCoroutine (timeoutCoroutine);
     }
 
     public void Complete()
     {
         Debug.Log("Level Completed");
-        if (gameManager != null)
-        {
-            gameManager.LevelFinished(1);
-        }
+        Won = true;
+        OnLevelComplete.Invoke();
+        End();
     }
 
     public void Failed()
     {
         Debug.Log("Level Failed");
-        if (gameManager != null)
+        Won = false;
+        FailureUI.SetActive(true);
+        OnLevelFailed.Invoke();
+        End();
+    }
+
+    IEnumerator EndLevel()
+    {
+        yield return new WaitForSeconds(2.5f);
+        if (Won)
         {
-            gameManager.LevelFinished(0);
+            if (gameManager != null)
+            {
+                gameManager.LevelFinished(1);
+            }
+        }
+        else
+        {
+            if (gameManager != null)
+            {
+                gameManager.LevelFinished(0);
+            }
         }
     }
 
     IEnumerator Timeout()
     {
-        //Print the time of when the function is first called.
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        // Create a countdown UI element
+        CountDownUI.SetActive(true);
 
-        //yield on a new YieldInstruction that waits for 5 seconds.
-        yield return new WaitForSeconds(timeout);
+        //yield on a new YieldInstruction that waits for N seconds.
+        while (timeout > 0)
+        {
+            foreach (Transform child in CountDownUI.transform)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+            for (int i = Mathf.Min(10, timeout); i > 0; i--)
+            {
+                // Create a Primitive square sprite
+                GameObject square =
+                    GameObject.CreatePrimitive(PrimitiveType.Cube);
+                Destroy(square.GetComponent<Collider>());
+                square.transform.parent = CountDownUI.transform;
+                square.transform.position =
+                    CountDownUI.transform.position + Vector3.right * .2f * i;
+                square.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            }
+            yield return new WaitForSeconds(1);
+            timeout--;
+        }
 
-        //After we have waited 5 seconds print the time again.
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
-        Failed();
+        if (Won)
+        {
+            Complete();
+        }
+        else
+        {
+            Failed();
+        }
     }
 }

@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Props
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Floor
+  - Vulnerable
+  - Damaging
   - 
   - 
   - 
