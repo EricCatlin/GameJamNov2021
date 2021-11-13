@@ -302,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc7b3b6c90d6394d84a5257f60dffb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameManagerObject: {fileID: 0}
   gameManager: {fileID: 0}
 --- !u!4 &1801911245
 Transform:
@@ -506,7 +507,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!212 &1934048677
 SpriteRenderer:
   m_ObjectHideFlags: 0

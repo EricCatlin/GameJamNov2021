@@ -13,16 +13,8 @@ public class LevelManager : MonoBehaviour
     {
         // Find GameManager
         GameManagerObject = GameObject.FindGameObjectWithTag("GameController");
-        if (GameManagerObject != null)
-        {
-        }
         gameManager = GameManagerObject.GetComponent<GameManager>();
-        Debug.Log("LevelManager: GameManager found", GameManagerObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        gameManager.SetLevelFromScene(this);
     }
 
     public void Begin()

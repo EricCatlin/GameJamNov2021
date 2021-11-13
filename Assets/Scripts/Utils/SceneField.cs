@@ -21,7 +21,6 @@ namespace Utilities
         {
             get
             {
-                Debug.Log("SceneName");
                 return sceneName;
             }
         }
@@ -30,7 +29,6 @@ namespace Utilities
         public static implicit operator string(SceneField sceneField)
 
         {
-            Debug.Log("string");
             return sceneField.SceneName;
         }
     }

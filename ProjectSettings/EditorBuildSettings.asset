@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 09ae0ab71eb452944957a01bae8399e8
+  - enabled: 1
+    path: Assets/Scenes/ComplexScene.unity
+    guid: e046d6866d6fce646a3ab86061b4d452
   m_configObjects: {}

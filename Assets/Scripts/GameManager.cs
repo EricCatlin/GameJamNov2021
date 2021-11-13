@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public int score = 0;
 
     // Store a reference to our levelScript which will set up the level.
-    private LevelManager CurrentLevel;
+    public LevelManager CurrentLevel;
 
     public SceneField MenuScene;
 
@@ -61,8 +61,10 @@ public class GameManager : MonoBehaviour
 
     public void Complete(int score = 1)
     {
+        Debug.Log("Complete");
         if (CurrentLevel != null)
         {
+            Debug.Log("Current");
             this.score += score;
             completedLevels.Add (currentScene);
             LoadRandomLevel();
@@ -71,14 +73,19 @@ public class GameManager : MonoBehaviour
 
     public void LoadRandomLevel()
     {
+        Debug.Log("LoadRandomLevel");
+        Debug.Log(levels.Count);
         if (levels.Count > 0)
         {
+            Debug.Log("Loading random level");
             int index = Random.Range(0, levels.Count);
             LoadLevel(levels[index]);
             return;
         }
         else
         {
+            Debug.Log("Loading Complete");
+
             LoadScene (CompleteScene);
         }
     }
@@ -88,7 +95,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loading Scene: " + scene.SceneName);
 
         // Load the selected scene, by scene name.
-        SceneManager.LoadScene(currentScene.SceneName);
+        SceneManager.LoadScene(scene.SceneName);
     }
 
     void LoadLevel(SceneField scene)
@@ -99,6 +106,11 @@ public class GameManager : MonoBehaviour
         currentScene = scene;
         levels.Remove (scene);
         SceneManager.LoadScene(currentScene.SceneName);
+    }
+
+    public void SetLevelFromScene(LevelManager level)
+    {
+        CurrentLevel = level;
     }
 
     // Update is called every frame.
