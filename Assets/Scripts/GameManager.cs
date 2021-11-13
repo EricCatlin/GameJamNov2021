@@ -8,14 +8,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
 
-    // Create an array of scenes to be loaded
-    public List<SceneField> scenes;
+    // Create an array of levels to be loaded
+    public List<SceneField> levels;
 
-    public List<SceneField> completedScenes;
+    public List<SceneField> completedLevels;
 
     public SceneField currentScene;
-
-    public SceneField nextScene;
 
     public int score = 0;
 
@@ -23,6 +21,8 @@ public class GameManager : MonoBehaviour
     private LevelManager CurrentLevel;
 
     public SceneField MenuScene;
+
+    public SceneField CompleteScene;
 
     // Awake is always called before any Start functions
     void Awake()
@@ -47,6 +47,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public static GameManager GetInstance()
+    {
+        return instance;
+    }
+
     // Initializes the game for each level.
     void InitGame()
     {
@@ -54,39 +59,45 @@ public class GameManager : MonoBehaviour
         CurrentLevel.Begin();
     }
 
-    void Complete(int score)
+    public void Complete(int score = 1)
     {
         if (CurrentLevel != null)
         {
             this.score += score;
-            completedScenes.Add (currentScene);
-            scenes.Remove (currentScene);
-
-            // If there are no more levels to load, end the game.
-            if (scenes.Count == 0)
-            {
-                Debug.Log("You win!");
-                Application.Quit();
-            }
-            else
-            {
-                LoadRandom();
-            }
+            completedLevels.Add (currentScene);
+            LoadRandomLevel();
         }
     }
 
-    public void LoadRandom()
+    public void LoadRandomLevel()
     {
-        int random = Random.Range(0, scenes.Count);
-        LoadScene(scenes[random]);
+        if (levels.Count > 0)
+        {
+            int index = Random.Range(0, levels.Count);
+            LoadLevel(levels[index]);
+            return;
+        }
+        else
+        {
+            LoadScene (CompleteScene);
+        }
     }
 
     void LoadScene(SceneField scene)
+    {
+        Debug.Log("Loading Scene: " + scene.SceneName);
+
+        // Load the selected scene, by scene name.
+        SceneManager.LoadScene(currentScene.SceneName);
+    }
+
+    void LoadLevel(SceneField scene)
     {
         Debug.Log("Loading level: " + scene.SceneName);
 
         // Load the selected scene, by scene name.
         currentScene = scene;
+        levels.Remove (scene);
         SceneManager.LoadScene(currentScene.SceneName);
     }
 

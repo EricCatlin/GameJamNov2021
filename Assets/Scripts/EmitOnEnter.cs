@@ -31,8 +31,15 @@ public class EmitOnEnter : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnCollisionEnter2D(Collision2D other)
     {
         Debug.Log("OnCollisionEnter2D");
+
+        // If the object is tagged as "Player"
+        if (other.gameObject.tag == "Player")
+        {
+            // Invoke the Unity Event
+            OnEnter.Invoke();
+        }
     }
 }

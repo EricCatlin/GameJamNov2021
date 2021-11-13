@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    public GameObject GameManagerObject;
+
     public GameManager gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
         // Find GameManager
-        gameManager =
-            GameObject.Find("GameManager").GetComponent<GameManager>();
+        GameManagerObject = GameObject.FindGameObjectWithTag("GameController");
+        if (GameManagerObject != null)
+        {
+        }
+        gameManager = GameManagerObject.GetComponent<GameManager>();
+        Debug.Log("LevelManager: GameManager found", GameManagerObject);
     }
 
     // Update is called once per frame
@@ -30,7 +36,12 @@ public class LevelManager : MonoBehaviour
     public void Complete()
     {
         Debug.Log("Level Completed");
-        gameManager.LoadRandom();
+
+        if (gameManager != null)
+        {
+            Debug.Log("LevelManager: GameManager found");
+            gameManager.Complete(2);
+        }
     }
 
     public void Failed()
