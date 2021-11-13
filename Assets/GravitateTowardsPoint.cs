@@ -17,7 +17,7 @@ public class GravitateTowardsPoint : MonoBehaviour
         // Missle Movement Logic
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
-        float force = .5f;
+        float force = .3f;
         Vector3 forceVector = direction.normalized * force;
         GetComponent<Rigidbody2D>().AddForce((Vector2) forceVector);
     }
