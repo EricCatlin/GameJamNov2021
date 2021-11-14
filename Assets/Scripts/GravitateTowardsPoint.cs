@@ -6,6 +6,8 @@ public class GravitateTowardsPoint : MonoBehaviour
 {
     public Transform target;
 
+    public float speed = 1;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,7 @@ public class GravitateTowardsPoint : MonoBehaviour
         // Missle Movement Logic
         Vector3 direction = target.position - transform.position;
         float distance = direction.magnitude;
-        float force = .3f;
+        float force = speed;
         Vector3 forceVector = direction.normalized * force;
         GetComponent<Rigidbody2D>().AddForce((Vector2) forceVector);
     }

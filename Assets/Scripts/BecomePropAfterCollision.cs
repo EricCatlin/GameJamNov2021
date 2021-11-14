@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class BecomePropAfterCollision : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void BecomeProp()
     {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+        //  gameObject.tag = "Prop";
         //  gameObject.layer = LayerMask.NameToLayer("Prop");
+        Destroy(gameObject, 10);
     }
 }

@@ -47,30 +47,48 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LevelFinished(int score = 1)
+    // Start game button triggers this
+    public void StartGame()
     {
-        Debug.Log("Complete");
-        if (CurrentLevel != null)
+        GetNextLevel();
+    }
+
+    // Informs GameManager that the level has been completed
+    // Game manager should then kick off the orchestration sequence to load teh next known level
+    public void LevelComplete(LevelManager level, bool won)
+    {
+        Debug.Log("Current Scene has finished");
+
+        // If the finishing scene is a Game Level, then we need to update some state
+        if (levels.IndexOf(CurrentScene) != -1)
         {
+            // If the level was won, then we need to add it to the completed levels list
             Debug.Log("Current");
             this.score += score;
             completedLevels.Add (CurrentScene);
+            levels.Remove (CurrentScene);
         }
-        LoadRandomLevel();
+
+        // Sequence of events to load the next level
+        level.TearDown();
     }
 
-    public void LoadRandomLevel()
+    public void LevelUnloaded(LevelManager level)
+    {
+        GetNextLevel();
+    }
+
+    public void GetNextLevel()
     {
         if (levels.Count > 0)
         {
             Debug.Log("Loading random level");
             int index = Random.Range(0, levels.Count);
-            LoadLevel(levels[index]);
-            return;
+            StartCoroutine(LoadLevel(levels[index]));
         }
         else
         {
-            Debug.Log("Loading Complete");
+            Debug.Log("No more levels, returning to menu");
 
             // Add completed levels to the list of levels to be loaded.
             levels.AddRange (completedLevels); //TODO remove this
@@ -79,33 +97,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator LoadLevel(SceneField scene)
+    {
+        Debug.Log("Loading level");
+        CurrentScene = scene;
+
+        // Load level async
+        yield return SceneManager.LoadSceneAsync(scene.SceneName);
+
+        // Get the level manager
+        CurrentLevel = GameObject.FindObjectOfType<LevelManager>();
+        CurrentLevel.gameManager = this;
+    }
+
+    public void LevelLoaded(LevelManager level)
+    {
+        CurrentLevel = level;
+        CurrentLevel.gameManager = this;
+        CurrentLevel.Setup();
+    }
+
     void LoadScene(SceneField scene)
     {
         Debug.Log("Loading Scene: " + scene.SceneName);
         SceneManager.LoadScene(scene.SceneName);
     }
 
-    void LoadLevel(SceneField scene)
+    public void LevelReady(LevelManager level)
     {
-        Debug.Log("Loading level: " + scene.SceneName);
-        levels.Remove (scene);
-        SceneManager.LoadScene(scene.SceneName);
-        CurrentScene = scene;
-    }
-
-    public void StartGame()
-    {
-        LoadRandomLevel();
-    }
-
-    public void LevelLoaded(LevelManager level)
-    {
-        CurrentLevel = level;
-        level.Begin();
-    }
-
-    // Update is called every frame.
-    void Update()
-    {
+        level.Play();
     }
 }

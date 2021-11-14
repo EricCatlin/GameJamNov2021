@@ -11,92 +11,88 @@ public class LevelManager : MonoBehaviour
 
     public GameManager gameManager;
 
-    public GameObject FailureUI;
-
-    public UnityEvent OnBegin;
-
     public UnityEvent OnLevelComplete;
 
     public UnityEvent OnLevelFailed;
 
-    public int timeout = 10;
+    public UnityEvent OnSetup;
 
-    public Coroutine timeoutCoroutine;
+    public UnityEvent OnBegin;
+
+    public UnityEvent OnTearDown;
+
+    public int playTimeout = 10;
+
+    Coroutine gameTimer;
+
+    Coroutine setupTimer;
+
+    Coroutine tearDownTimer;
 
     public bool Won;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Find GameManager
-        GameManagerObject = GameObject.FindGameObjectWithTag("GameController");
-        gameManager = GameManagerObject.GetComponent<GameManager>();
+    public int score = 0;
 
-        // Inform GameManager this this script has loaded and is ready to begin
+    public void Start()
+    {
+        if (gameManager == null)
+        {
+            gameManager = FindObjectOfType<GameManager>();
+        }
+        Debug.Log("LevelManager Start " + gameManager.gameObject.name);
         gameManager.LevelLoaded(this);
     }
 
-    public void Begin()
+    // <SETUP>
+    public void Setup()
     {
-        Debug.Log("Level Started");
-        timeoutCoroutine = StartCoroutine(Timeout());
+        OnSetup.Invoke();
+        setupTimer = StartCoroutine(SetupTimeout());
     }
 
-    public void End()
+    public IEnumerator SetupTimeout()
     {
-        Debug.Log("Level Ended");
-        StopCoroutine (timeoutCoroutine);
+        yield return new WaitForSeconds(2);
+        SetupComplete();
     }
 
-    public void Complete()
+    public void SetupComplete()
     {
-        Debug.Log("Level Completed");
-        Won = true;
-        OnLevelComplete.Invoke();
-        End();
-    }
-
-    public void Failed()
-    {
-        Debug.Log("Level Failed");
-        Won = false;
-        FailureUI.SetActive(true);
-        OnLevelFailed.Invoke();
-        End();
-    }
-
-    IEnumerator EndLevel()
-    {
-        yield return new WaitForSeconds(2.5f);
-        if (Won)
+        if (setupTimer != null)
         {
-            if (gameManager != null)
-            {
-                gameManager.LevelFinished(1);
-            }
+            StopCoroutine (setupTimer);
+            setupTimer = null;
         }
-        else
+        if (gameManager != null)
         {
-            if (gameManager != null)
-            {
-                gameManager.LevelFinished(0);
-            }
+            gameManager.LevelReady(this);
         }
     }
 
-    IEnumerator Timeout()
+    // </SETUP>
+    // <Game>
+    public void Play()
+    {
+        OnBegin.Invoke();
+        if (playTimeout > 0)
+        {
+            gameTimer = StartCoroutine(PlayTimeout());
+        }
+    }
+
+    public IEnumerator PlayTimeout()
     {
         // Create a countdown UI element
         CountDownUI.SetActive(true);
 
         //yield on a new YieldInstruction that waits for N seconds.
-        while (timeout > 0)
+        while (playTimeout > 0)
         {
             foreach (Transform child in CountDownUI.transform)
             {
                 GameObject.Destroy(child.gameObject);
             }
-            for (int i = Mathf.Min(10, timeout); i > 0; i--)
+            for (int i = Mathf.Min(10, playTimeout); i > 0; i--)
             {
                 // Create a Primitive square sprite
                 GameObject square =
@@ -108,16 +104,71 @@ public class LevelManager : MonoBehaviour
                 square.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
             }
             yield return new WaitForSeconds(1);
-            timeout--;
+            playTimeout--;
+        }
+        PlayComplete();
+    }
+
+    public void SetWon(bool won)
+    {
+        Won = won;
+    }
+
+    public void PlayComplete()
+    {
+        if (gameTimer != null)
+        {
+            StopCoroutine (gameTimer);
+            gameTimer = null;
         }
 
         if (Won)
         {
-            Complete();
+            Debug.Log("Level Completed");
+            Won = true;
+            OnLevelComplete.Invoke();
+            gameManager.LevelComplete(this, true);
         }
         else
         {
-            Failed();
+            Debug.Log("Level Failed");
+            Won = false;
+            OnLevelFailed.Invoke();
+            gameManager.LevelComplete(this, false);
         }
+    }
+
+    // </Game>
+    // <TearDown>
+    public void TearDown()
+    {
+        OnTearDown.Invoke();
+        tearDownTimer = StartCoroutine(TearDownTimeout());
+    }
+
+    public IEnumerator TearDownTimeout()
+    {
+        yield return new WaitForSeconds(3);
+        TearDownComplete();
+    }
+
+    public void TearDownComplete()
+    {
+        if (tearDownTimer != null)
+        {
+            StopCoroutine (tearDownTimer);
+            tearDownTimer = null;
+        }
+        if (gameManager != null)
+        {
+            gameManager.score += score;
+            gameManager.LevelUnloaded(this);
+        }
+    }
+
+    // </TearDown>
+    public void SetScore(int score)
+    {
+        this.score = score;
     }
 }
