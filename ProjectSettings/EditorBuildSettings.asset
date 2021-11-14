@@ -6,15 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SimpleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 09ae0ab71eb452944957a01bae8399e8
+  - enabled: 1
+    path: Assets/Scenes/SimpleScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/ComplexScene.unity
     guid: e046d6866d6fce646a3ab86061b4d452
   - enabled: 1
     path: Assets/Scenes/TankGame.unity
     guid: f8f31dfed69f4d7498cbca8b25d44963
+  - enabled: 1
+    path: Assets/Scenes/ChickenEgg.unity
+    guid: 5ad02a158b7885f4b9f6ac27a523faab
+  - enabled: 1
+    path: Assets/Scenes/EndingScreen.unity
+    guid: 877648e5f37d072429b820e4cc43855c
   m_configObjects: {}

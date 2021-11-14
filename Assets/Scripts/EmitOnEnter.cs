@@ -6,32 +6,35 @@ using UnityEngine.UI;
 
 public class EmitOnEnter : MonoBehaviour
 {
-    // Instantiate Unity Event
-    public UnityEvent OnEnter;
+    public UnityEvent OnDamageCollision;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public UnityEvent OnPlayerCollision;
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
+    public UnityEvent OnAnyCollision;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("OnTriggerEnter: " + other.name);
-
-        // If the object is tagged as "Player"
-        OnEnter.Invoke();
+        Debug.Log(gameObject.name + " Triggered by " + other.name);
+        HandleOnEnter(other.gameObject.tag, other.gameObject.name);
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("OnCollisionEnter2D: " + other.gameObject.name);
+        Debug.Log(gameObject.name + " Collision with " + other.gameObject.name);
+        HandleOnEnter(other.gameObject.tag, other.gameObject.name);
+    }
 
-        // Invoke the Unity Event
-        OnEnter.Invoke();
+    void HandleOnEnter(string tag, string name)
+    {
+        if (tag == "Damage")
+        {
+            OnDamageCollision.Invoke();
+        }
+        if (tag == "Player")
+        {
+            OnPlayerCollision.Invoke();
+        }
+
+        OnAnyCollision.Invoke();
     }
 }

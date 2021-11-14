@@ -34,7 +34,7 @@ public class ShootAtClick : MonoBehaviour
             bullet =
                 Instantiate(bullet, transform.position, Quaternion.identity) as
                 GameObject;
-            bullet.GetComponent<Rigidbody2D>().velocity = transform.right * 10;
+            bullet.GetComponent<Rigidbody2D>().velocity = transform.right * 15;
         }
     }
 }

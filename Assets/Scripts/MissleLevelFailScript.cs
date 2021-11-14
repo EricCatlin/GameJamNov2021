@@ -19,10 +19,9 @@ public class MissleLevelFailScript : MonoBehaviour
 
     public void Failed()
     {
-        Debug.Log("Failed");
+        Debug.Log("Failed Missle Level");
         foreach (GameObject house in Houses)
         {
-            Debug.Log("House: " + house.name);
             Rigidbody2D rigid = house.GetComponent<Rigidbody2D>();
             rigid.bodyType = RigidbodyType2D.Dynamic;
 
@@ -42,7 +41,8 @@ public class MissleLevelFailScript : MonoBehaviour
 
         // Start coroutine to wait for a second and then load the next level
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.Failed();
+        levelManager.Won = false;
+        levelManager.PlayComplete();
         Destroy(gameObject.GetComponent<Collider2D>());
     }
 }

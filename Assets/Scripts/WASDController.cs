@@ -6,6 +6,8 @@ public class WASDController : MonoBehaviour
 {
     Rigidbody2D rb;
 
+    public float speed = 10f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +29,7 @@ public class WASDController : MonoBehaviour
         rb.velocity =
             Vector2
                 .Lerp(rb.velocity,
-                new Vector2(horizontal * 10, vertical * 10),
+                new Vector2(horizontal * speed, vertical * speed),
                 0.9f);
-        // transform
-        //     .Translate(new Vector3(Input.GetAxis("Horizontal"),
-        //         Input.GetAxis("Vertical"),
-        //         0) *
-        //     Time.deltaTime *
-        //     10);
     }
 }
