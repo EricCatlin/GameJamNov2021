@@ -9,6 +9,9 @@ public class CountUpTimer : MonoBehaviour
 public UnityEvent OnCountDone;
     public int CountTo;
     public int CurrentCount;
+    public UnityEvent OnCount;
+
+    public GameObject Icon;
 
     public bool active;
     
@@ -46,16 +49,16 @@ public UnityEvent OnCountDone;
             for (int i = CurrentCount; i > 0; i--)
             {
                 // Create a Primitive square sprite
-                GameObject square =
-                    GameObject.CreatePrimitive(PrimitiveType.Cube);
+               GameObject square =   GameObject.Instantiate(Icon, transform.position, Quaternion.identity) as GameObject;
                 Destroy(square.GetComponent<Collider>());
                 square.transform.parent = transform;
                 square.transform.position =
                     transform.position + Vector3.right * .2f * i;
-                square.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                square.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             }
             yield return new WaitForSeconds(1);
             if(active){
+                OnCount.Invoke();
                 CurrentCount++;
             }
             

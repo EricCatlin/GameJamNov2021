@@ -504,8 +504,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8109652687232623429, guid: 8c262c8611eb9d742ad628869d061750, type: 3}
-      propertyPath: orthographic size
-      value: 10
+      propertyPath: orthographic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8c262c8611eb9d742ad628869d061750, type: 3}
@@ -2165,10 +2165,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1118818703185347433, guid: 44aa4beef5c70d64eae8d45483435e4e, type: 3}
       propertyPath: Won
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1118818703185347433, guid: 44aa4beef5c70d64eae8d45483435e4e, type: 3}
       propertyPath: score
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1118818703185347433, guid: 44aa4beef5c70d64eae8d45483435e4e, type: 3}
+      propertyPath: maxScore
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1118818703185347433, guid: 44aa4beef5c70d64eae8d45483435e4e, type: 3}

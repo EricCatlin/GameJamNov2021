@@ -8,9 +8,12 @@ public class GravitateTowardsPoint : MonoBehaviour
 
     public float speed = 1;
 
+    Rigidbody2D rb;
+
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -21,6 +24,15 @@ public class GravitateTowardsPoint : MonoBehaviour
         float distance = direction.magnitude;
         float force = speed;
         Vector3 forceVector = direction.normalized * force;
-        GetComponent<Rigidbody2D>().AddForce((Vector2) forceVector);
+
+        if (!rb.isKinematic)
+        {
+            rb.AddForce (forceVector);
+        }
+        else
+        {
+            rb.velocity =
+                Vector3.Lerp(rb.velocity, forceVector, Time.deltaTime);
+        }
     }
 }

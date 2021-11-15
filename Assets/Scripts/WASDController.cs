@@ -8,6 +8,10 @@ public class WASDController : MonoBehaviour
 
     public float speed = 10f;
 
+    public bool H = true;
+
+    public bool V = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +30,43 @@ public class WASDController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        rb.velocity =
-            Vector2
-                .Lerp(rb.velocity,
-                new Vector2(horizontal * speed, vertical * speed),
-                0.9f);
+        if (!H) horizontal = 0;
+        if (!V) vertical = 0;
+
+        if (rb.isKinematic)
+        {
+            rb.velocity =
+                Vector2
+                    .Lerp(rb.velocity,
+                    new Vector2(horizontal * speed, vertical * speed),
+                    0.9f);
+        }
+        else
+        {
+            // Move rb with forces in the direction of the input
+            // Force is a vector
+            // Force is a vector
+            Vector2 forceVector = new Vector2(horizontal, vertical);
+
+            // Normalize the vector to get a unit vector
+            forceVector.Normalize();
+
+            // Multiply the unit vector by the force
+            forceVector *= speed;
+
+            // Add the force to the rigidbody
+            rb.AddForce (forceVector);
+
+            // Prevent the character from moving faster than the speed
+            // Limit the speed
+            rb.velocity = Vector2.ClampMagnitude(rb.velocity, speed);
+
+            // Slow down if the character horizontal or vertical is 0
+            // If the character is not moving, slow down
+            if (horizontal == 0 && vertical == 0)
+            {
+                rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, 0.9f);
+            }
+        }
     }
 }

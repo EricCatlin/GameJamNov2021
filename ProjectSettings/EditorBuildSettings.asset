@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EndingScreen.unity
     guid: 877648e5f37d072429b820e4cc43855c
+  - enabled: 1
+    path: Assets/Scenes/WW2.unity
+    guid: 9917c8b3fe1145d4d99b606c7f65e107
   m_configObjects: {}

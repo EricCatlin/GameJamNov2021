@@ -5,8 +5,6 @@ using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
-    public GameObject GameManagerObject;
-
     public GameObject CountDownUI;
 
     public GameManager gameManager;
@@ -33,14 +31,20 @@ public class LevelManager : MonoBehaviour
 
     public int score = 0;
 
+    public int maxScore = 0;
+
     public void Start()
     {
-        if (gameManager == null)
+        if (!gameManager)
         {
             gameManager = FindObjectOfType<GameManager>();
         }
-        Debug.Log("LevelManager Start " + gameManager.gameObject.name);
-        gameManager.LevelLoaded(this);
+
+        if (gameManager)
+        {
+            Debug.Log("LevelManager Start " + gameManager.gameObject.name);
+            gameManager.LevelLoaded(this);
+        }
     }
 
     // <SETUP>
@@ -92,7 +96,7 @@ public class LevelManager : MonoBehaviour
             {
                 GameObject.Destroy(child.gameObject);
             }
-            for (int i = Mathf.Min(10, playTimeout); i > 0; i--)
+            for (int i = Mathf.Min(10, playTimeout); i >= 0; i--)
             {
                 // Create a Primitive square sprite
                 GameObject square =
@@ -127,14 +131,14 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Level Completed");
             Won = true;
             OnLevelComplete.Invoke();
-            gameManager.LevelComplete(this, true);
+            gameManager.LevelComplete(this, score, maxScore);
         }
         else
         {
             Debug.Log("Level Failed");
             Won = false;
             OnLevelFailed.Invoke();
-            gameManager.LevelComplete(this, false);
+            gameManager.LevelComplete(this, score, maxScore);
         }
     }
 
@@ -161,7 +165,6 @@ public class LevelManager : MonoBehaviour
         }
         if (gameManager != null)
         {
-            gameManager.score += score;
             gameManager.LevelUnloaded(this);
         }
     }
@@ -170,5 +173,18 @@ public class LevelManager : MonoBehaviour
     public void SetScore(int score)
     {
         this.score = score;
+    }
+
+    public void IncrementScore(int score = 1)
+    {
+        this.score += score;
+    }
+
+    public void GoToMenu()
+    {
+        if (gameManager != null)
+        {
+            gameManager.GoToMenu();
+        }
     }
 }

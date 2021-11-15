@@ -44,21 +44,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - sceneAsset: {fileID: 102900000, guid: 2cda990e2423bbf4892e6590ba056729, type: 3}
-    sceneName: Scenes/SimpleScene
-  - sceneAsset: {fileID: 102900000, guid: e046d6866d6fce646a3ab86061b4d452, type: 3}
-    sceneName: Scenes/ComplexScene
   - sceneAsset: {fileID: 102900000, guid: f8f31dfed69f4d7498cbca8b25d44963, type: 3}
     sceneName: Scenes/TankGame
+  - sceneAsset: {fileID: 102900000, guid: 5ad02a158b7885f4b9f6ac27a523faab, type: 3}
+    sceneName: Scenes/ChickenEgg
+  - sceneAsset: {fileID: 102900000, guid: 9917c8b3fe1145d4d99b606c7f65e107, type: 3}
+    sceneName: Scenes/WW2
   completedLevels: []
   CurrentScene:
     sceneAsset: {fileID: 0}
     sceneName: 
   score: 0
+  maxScore: 0
   CurrentLevel: {fileID: 0}
   MenuScene:
     sceneAsset: {fileID: 102900000, guid: 09ae0ab71eb452944957a01bae8399e8, type: 3}
     sceneName: Scenes/StartMenu
   CompleteScene:
-    sceneAsset: {fileID: 102900000, guid: 09ae0ab71eb452944957a01bae8399e8, type: 3}
-    sceneName: Scenes/StartMenu
+    sceneAsset: {fileID: 102900000, guid: 877648e5f37d072429b820e4cc43855c, type: 3}
+    sceneName: Scenes/EndingScreen
